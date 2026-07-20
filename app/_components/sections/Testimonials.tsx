@@ -21,7 +21,7 @@ export function Testimonials() {
           <Reveal key={testimonial.author} delay={index * 0.1}>
             <div className="rounded-card border border-paper/10 p-8">
               <p className="font-accent text-lg italic text-paper/90">
-                &bdquo;{testimonial.quote}&rdquo;
+                „{testimonial.quote}“
               </p>
               <p className="mt-4 text-sm text-paper/50">
                 — {testimonial.author}
