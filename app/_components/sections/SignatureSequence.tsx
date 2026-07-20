@@ -37,7 +37,16 @@ export function SignatureSequence() {
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start start", "end end"],
+    // Note: "0% 0%"/"100% 100%" is numerically identical to the
+    // "start start"/"end end" preset, but the literal preset keywords make
+    // Motion pick a browser-native ViewTimeline (CSS `contain` named range)
+    // to drive scrollYProgress. For a target much taller than the viewport
+    // (this section is 300vh) that native range is degenerate, which desyncs
+    // the derived opacity crossfades from real scroll position and lets two
+    // statements render at full opacity simultaneously. The equivalent
+    // percentage-edge syntax below isn't recognised by Motion's preset
+    // matcher, so it keeps the (correct) JS-computed scroll tracking.
+    offset: ["0% 0%", "100% 100%"],
   });
 
   useMotionValueEvent(scrollYProgress, "change", (value) => {
