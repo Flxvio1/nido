@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Jost, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import { Atmosphere } from "./_components/ui/Atmosphere";
 
 const jost = Jost({
   variable: "--font-jost",
@@ -34,6 +35,7 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-ink font-display text-paper">
         {children}
+        <Atmosphere />
       </body>
     </html>
   );
