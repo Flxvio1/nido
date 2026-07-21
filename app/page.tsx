@@ -1,5 +1,6 @@
 import { Nav } from "./_components/sections/Nav";
 import { Hero } from "./_components/sections/Hero";
+import { HoursStrip } from "./_components/sections/HoursStrip";
 import { SignatureSequence } from "./_components/sections/SignatureSequence";
 import { About } from "./_components/sections/About";
 import { Services } from "./_components/sections/Services";
@@ -15,6 +16,7 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <HoursStrip />
         <SignatureSequence />
         <About />
         <Services />

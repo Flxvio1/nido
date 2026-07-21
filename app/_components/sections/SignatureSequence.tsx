@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useMotionValueEvent, useScroll, useTransform } from "motion/react";
-import { RazorScene } from "../three/RazorScene";
+import { MonogramScene } from "../three/MonogramScene";
 import { useCanRender3D } from "../three/useCanRender3D";
 import { SIGNATURE_FALLBACK_IMAGE_ID, unsplashUrl } from "@/lib/content";
 import { Eyebrow } from "../ui/Eyebrow";
@@ -67,7 +67,7 @@ export function SignatureSequence() {
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
         <div className="absolute inset-0">
           {canRender3D ? (
-            <RazorScene progressRef={progressRef} />
+            <MonogramScene progressRef={progressRef} />
           ) : (
             <Image
               src={unsplashUrl(SIGNATURE_FALLBACK_IMAGE_ID)}
@@ -87,7 +87,7 @@ export function SignatureSequence() {
               className="absolute inset-x-0"
             >
               <Eyebrow>{statement.eyebrow}</Eyebrow>
-              <p className="mt-4 font-display text-3xl font-light leading-snug text-paper sm:text-4xl">
+              <p className="mt-4 font-display text-3xl font-light leading-snug text-paper [text-shadow:0_2px_28px_rgba(0,0,0,0.9),0_0_8px_rgba(0,0,0,0.5)] sm:text-4xl">
                 {statement.before}
                 <AccentWord>{statement.accent}</AccentWord>
                 {statement.after}

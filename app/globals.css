@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-ink: #0c0b09;
+  --color-ink: #000000;
   --color-paper: #f2ede4;
-  --color-accent: #a9c4d6;
-  --color-accent-glow: #e4f1fa;
+  --color-accent: #d6b36a;
+  --color-accent-glow: #f1e2bd;
   --font-display: var(--font-jost);
   --font-accent: var(--font-playfair);
   --radius-card: 28px;
@@ -18,4 +18,13 @@ body {
 
 body {
   overflow-x: hidden;
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }

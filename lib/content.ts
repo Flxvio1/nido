@@ -101,9 +101,9 @@ export const GALLERY_IMAGE_IDS = [
   "1512690459411-b9245aed614b",
 ];
 
-export const HERO_IMAGE_ID = "1503951914875-452162b0f3f1";
-export const ABOUT_IMAGE_ID = "1585747860715-2ba37e788b70";
-export const SIGNATURE_FALLBACK_IMAGE_ID = "1517832606299-7ae9b720a186";
+export const HERO_IMAGE_ID = "1621645582931-d1d3e6564943";
+export const ABOUT_IMAGE_ID = "1517832606299-7ae9b720a186";
+export const SIGNATURE_FALLBACK_IMAGE_ID = "1549271568-e87e07c5406b";
 
 export const TESTIMONIALS = [
   {
@@ -117,6 +117,18 @@ export const TESTIMONIALS = [
   {
     quote: "Die heisse Rasur mit dem Messer ist ein Ritual für sich.",
     author: "D. Baumann",
+  },
+  {
+    quote: "Termin gebucht, pünktlich drangekommen, perfekt beraten.",
+    author: "S. Gerber",
+  },
+  {
+    quote: "Mein Bart war noch nie so sauber in Form. Absolute Empfehlung.",
+    author: "L. Steiner",
+  },
+  {
+    quote: "Ruhige Atmosphäre, ehrliche Beratung — man fühlt sich wohl.",
+    author: "R. Widmer",
   },
 ];
 
