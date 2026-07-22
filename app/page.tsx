@@ -1,7 +1,7 @@
 import { Nav } from "./_components/sections/Nav";
 import { Hero } from "./_components/sections/Hero";
 import { HoursStrip } from "./_components/sections/HoursStrip";
-import { SignatureSequence } from "./_components/sections/SignatureSequence";
+import { ScissorsSequence } from "./_components/sections/ScissorsSequence";
 import { About } from "./_components/sections/About";
 import { Services } from "./_components/sections/Services";
 import { Team } from "./_components/sections/Team";
@@ -17,7 +17,7 @@ export default function Home() {
       <main>
         <Hero />
         <HoursStrip />
-        <SignatureSequence />
+        <ScissorsSequence />
         <About />
         <Services />
         <Team />
