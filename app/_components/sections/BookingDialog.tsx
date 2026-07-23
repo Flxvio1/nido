@@ -3,13 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "motion/react";
-import { CONTACT, SERVICE_GROUPS } from "@/lib/content";
+import { CONTACT } from "@/lib/content";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
-
-const SERVICES = SERVICE_GROUPS.flatMap((group) =>
-  group.items.map((item) => ({ ...item, category: group.category }))
-);
 
 // Mo–Sa 10:00–20:00, halbstündliche Slots.
 const SLOTS = Array.from({ length: 20 }, (_, i) => {
@@ -89,8 +85,6 @@ function PagerArrow({
 
 export function BookingDialog() {
   const [open, setOpen] = useState(false);
-  const [step, setStep] = useState<1 | 2>(1);
-  const [service, setService] = useState<string | null>(null);
   const [dayKey, setDayKey] = useState<string | null>(null);
   const [time, setTime] = useState<string | null>(null);
   const [page, setPage] = useState(0);
@@ -114,12 +108,11 @@ export function BookingDialog() {
     };
   }, [open]);
 
-  const selectedService = SERVICES.find((s) => s.name === service);
   const selectedDay = days.find((d) => d.key === dayKey);
-  const complete = Boolean(selectedService && selectedDay && time);
+  const complete = Boolean(selectedDay && time);
 
   const message = complete
-    ? `Hallo Nido Coiffeur! Ich möchte gerne einen Termin buchen:\n• ${selectedService!.name} (${selectedService!.price})\n• ${selectedDay!.longLabel}\n• ${time} Uhr\n\nGeht das bei euch? Danke!`
+    ? `Hallo Nido Coiffeur! Ich möchte gerne einen Termin buchen:\n• ${selectedDay!.longLabel}\n• ${time} Uhr\n\nGeht das bei euch? Danke!`
     : "";
   const waHref = `${CONTACT.whatsappHref}?text=${encodeURIComponent(message)}`;
 
@@ -164,14 +157,9 @@ export function BookingDialog() {
             transition={{ duration: 0.45, ease: EASE }}
           >
             <div className="flex items-start justify-between border-b border-paper/10 px-6 py-5 sm:px-8">
-              <div>
-                <p className="font-display text-[11px] uppercase tracking-[0.25em] text-paper/50">
-                  Schritt {step} von 2
-                </p>
-                <h3 className="mt-1 font-display text-2xl font-light text-paper">
-                  {step === 1 ? "Leistung wählen" : "Datum & Zeit wählen"}
-                </h3>
-              </div>
+              <h3 className="font-display text-2xl font-light text-paper">
+                Datum & Zeit wählen
+              </h3>
               <button
                 type="button"
                 onClick={close}
@@ -183,189 +171,116 @@ export function BookingDialog() {
             </div>
 
             <div className="flex-1 overflow-y-auto px-6 py-6 sm:px-8">
-              {step === 1 ? (
-                <div className="space-y-2">
-                  {SERVICES.map((s) => {
-                    const selected = service === s.name;
-                    return (
-                      <button
-                        key={s.name}
-                        type="button"
-                        onClick={() => setService(s.name)}
-                        aria-pressed={selected}
-                        className={`flex w-full items-baseline justify-between gap-4 rounded-2xl border px-5 py-4 text-left transition-colors duration-300 ${
-                          selected
-                            ? "border-accent/70 bg-accent/10"
-                            : "border-paper/10 hover:border-paper/30"
+              <div className="flex items-center justify-between">
+                <p className="font-display text-sm text-paper/70">
+                  {monthLabel}
+                </p>
+                <div className="flex gap-2">
+                  <PagerArrow
+                    direction="prev"
+                    disabled={page === 0}
+                    onClick={() => setPage((p) => Math.max(0, p - 1))}
+                  />
+                  <PagerArrow
+                    direction="next"
+                    disabled={page === WEEKS_AHEAD - 1}
+                    onClick={() =>
+                      setPage((p) => Math.min(WEEKS_AHEAD - 1, p + 1))
+                    }
+                  />
+                </div>
+              </div>
+
+              <div className="mt-4 grid grid-cols-7 gap-1 border-b border-paper/10 pb-4">
+                {pageDays.map((d) => {
+                  const selected = dayKey === d.key;
+                  return (
+                    <button
+                      key={d.key}
+                      type="button"
+                      onClick={() => !d.closed && setDayKey(d.key)}
+                      disabled={d.closed}
+                      aria-pressed={selected}
+                      className={`flex flex-col items-center gap-1 rounded-xl px-1 py-2.5 transition-colors duration-300 ${
+                        d.closed
+                          ? "cursor-not-allowed text-paper/20"
+                          : selected
+                            ? "bg-accent/10 text-accent"
+                            : "text-paper/70 hover:bg-paper/5 hover:text-paper"
+                      }`}
+                    >
+                      <span className="font-display text-[9px] uppercase tracking-[0.04em] sm:text-[10px] sm:tracking-[0.12em]">
+                        {d.weekday}
+                      </span>
+                      <span className="font-display text-lg">{d.dayNr}</span>
+                      <span
+                        aria-hidden
+                        className={`h-px w-5 ${
+                          selected ? "bg-accent" : "bg-transparent"
                         }`}
-                      >
-                        <span>
-                          <span
-                            className={`block font-display text-base ${
-                              selected ? "text-accent" : "text-paper"
-                            }`}
-                          >
-                            {s.name}
-                          </span>
-                          <span className="mt-0.5 block text-xs text-paper/50">
-                            {s.description}
-                          </span>
-                        </span>
-                        <span
-                          className={`whitespace-nowrap font-display text-sm ${
-                            selected ? "text-accent" : "text-paper/60"
-                          }`}
-                        >
-                          {s.price}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div>
-                  <div className="flex items-center justify-between">
-                    <p className="font-display text-sm text-paper/70">
-                      {monthLabel}
-                    </p>
-                    <div className="flex gap-2">
-                      <PagerArrow
-                        direction="prev"
-                        disabled={page === 0}
-                        onClick={() => setPage((p) => Math.max(0, p - 1))}
                       />
-                      <PagerArrow
-                        direction="next"
-                        disabled={page === WEEKS_AHEAD - 1}
-                        onClick={() =>
-                          setPage((p) => Math.min(WEEKS_AHEAD - 1, p + 1))
-                        }
-                      />
-                    </div>
-                  </div>
+                    </button>
+                  );
+                })}
+              </div>
 
-                  <div className="mt-4 grid grid-cols-7 gap-1 border-b border-paper/10 pb-4">
-                    {pageDays.map((d) => {
-                      const selected = dayKey === d.key;
-                      return (
-                        <button
-                          key={d.key}
-                          type="button"
-                          onClick={() => !d.closed && setDayKey(d.key)}
-                          disabled={d.closed}
-                          aria-pressed={selected}
-                          className={`flex flex-col items-center gap-1 rounded-xl px-1 py-2.5 transition-colors duration-300 ${
-                            d.closed
-                              ? "cursor-not-allowed text-paper/20"
-                              : selected
-                                ? "bg-accent/10 text-accent"
-                                : "text-paper/70 hover:bg-paper/5 hover:text-paper"
-                          }`}
-                        >
-                          <span className="font-display text-[9px] uppercase tracking-[0.04em] sm:text-[10px] sm:tracking-[0.12em]">
-                            {d.weekday}
-                          </span>
-                          <span className="font-display text-lg">
-                            {d.dayNr}
-                          </span>
-                          <span
-                            aria-hidden
-                            className={`h-px w-5 ${
-                              selected ? "bg-accent" : "bg-transparent"
-                            }`}
-                          />
-                        </button>
-                      );
-                    })}
-                  </div>
+              <div className="mt-5 grid grid-cols-4 gap-2 sm:grid-cols-5">
+                {visibleSlots.map((slot) => {
+                  const selected = time === slot;
+                  return (
+                    <button
+                      key={slot}
+                      type="button"
+                      onClick={() => setTime(slot)}
+                      aria-pressed={selected}
+                      className={`rounded-full border py-2 font-display text-sm transition-colors duration-300 ${
+                        selected
+                          ? "border-accent bg-accent/10 text-accent"
+                          : "border-paper/10 text-paper/70 hover:border-paper/35 hover:text-paper"
+                      }`}
+                    >
+                      {slot}
+                    </button>
+                  );
+                })}
+              </div>
+              <button
+                type="button"
+                onClick={() => setAllSlots((v) => !v)}
+                className="mt-4 font-display text-xs uppercase tracking-[0.2em] text-accent/90 transition-colors hover:text-accent"
+              >
+                {allSlots
+                  ? "Weniger Zeiten anzeigen"
+                  : `Mehr Zeiten anzeigen (${SLOTS.length - SLOTS_PREVIEW} weitere)`}
+              </button>
 
-                  <div className="mt-5 grid grid-cols-4 gap-2 sm:grid-cols-5">
-                    {visibleSlots.map((slot) => {
-                      const selected = time === slot;
-                      return (
-                        <button
-                          key={slot}
-                          type="button"
-                          onClick={() => setTime(slot)}
-                          aria-pressed={selected}
-                          className={`rounded-full border py-2 font-display text-sm transition-colors duration-300 ${
-                            selected
-                              ? "border-accent bg-accent/10 text-accent"
-                              : "border-paper/10 text-paper/70 hover:border-paper/35 hover:text-paper"
-                          }`}
-                        >
-                          {slot}
-                        </button>
-                      );
-                    })}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setAllSlots((v) => !v)}
-                    className="mt-4 font-display text-xs uppercase tracking-[0.2em] text-accent/90 transition-colors hover:text-accent"
-                  >
-                    {allSlots
-                      ? "Weniger Zeiten anzeigen"
-                      : `Mehr Zeiten anzeigen (${SLOTS.length - SLOTS_PREVIEW} weitere)`}
-                  </button>
-
-                  <div className="mt-6 rounded-2xl border border-accent/25 bg-accent/5 px-5 py-4">
-                    <p className="font-display text-[10px] uppercase tracking-[0.25em] text-paper/50">
-                      Aktuell gewählt
-                    </p>
-                    <p className="mt-1.5 text-sm text-paper/85">
-                      {selectedService?.name}
-                      {selectedDay && ` · ${selectedDay.longLabel}`}
-                      {time && ` · ${time} Uhr`}
-                      {!selectedDay && !time && " — wähle Datum und Zeit"}
-                    </p>
-                  </div>
-                </div>
-              )}
+              <div className="mt-6 rounded-2xl border border-accent/25 bg-accent/5 px-5 py-4">
+                <p className="font-display text-[10px] uppercase tracking-[0.25em] text-paper/50">
+                  Aktuell gewählt
+                </p>
+                <p className="mt-1.5 text-sm text-paper/85">
+                  {selectedDay
+                    ? `${selectedDay.longLabel}${time ? ` · ${time} Uhr` : " — wähle eine Zeit"}`
+                    : "Wähle Datum und Zeit"}
+                </p>
+              </div>
             </div>
 
             <div className="flex items-center justify-between gap-4 border-t border-paper/10 px-6 py-5 sm:px-8">
-              {step === 2 ? (
-                <button
-                  type="button"
-                  onClick={() => setStep(1)}
-                  className="rounded-full border border-paper/20 px-6 py-3 font-display text-sm text-paper/80 transition-colors duration-300 hover:border-accent hover:text-accent"
-                >
-                  Zurück
-                </button>
-              ) : (
-                <p className="text-xs text-paper/40">
-                  Bestätigung per WhatsApp
-                </p>
-              )}
-              {step === 1 ? (
-                <button
-                  type="button"
-                  onClick={() => service && setStep(2)}
-                  disabled={!service}
-                  className={`rounded-full px-7 py-3 font-display text-sm tracking-wide transition-colors duration-300 ${
-                    service
-                      ? "bg-paper text-ink hover:bg-accent"
-                      : "cursor-not-allowed border border-paper/15 text-paper/40"
-                  }`}
-                >
-                  Weiter
-                </button>
-              ) : (
-                <a
-                  href={complete ? waHref : undefined}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-disabled={!complete}
-                  className={`rounded-full px-7 py-3 text-center font-display text-sm tracking-wide transition-colors duration-300 ${
-                    complete
-                      ? "bg-paper text-ink hover:bg-accent"
-                      : "cursor-not-allowed border border-paper/15 text-paper/40"
-                  }`}
-                >
-                  Termin per WhatsApp buchen
-                </a>
-              )}
+              <p className="text-xs text-paper/40">Bestätigung per WhatsApp</p>
+              <a
+                href={complete ? waHref : undefined}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-disabled={!complete}
+                className={`rounded-full px-7 py-3 text-center font-display text-sm tracking-wide transition-colors duration-300 ${
+                  complete
+                    ? "bg-paper text-ink hover:bg-accent"
+                    : "cursor-not-allowed border border-paper/15 text-paper/40"
+                }`}
+              >
+                Termin per WhatsApp buchen
+              </a>
             </div>
           </motion.div>
         </motion.div>

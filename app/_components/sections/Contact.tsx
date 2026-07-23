@@ -18,8 +18,8 @@ export function Contact() {
                 Buch dir deinen <AccentWord>Termin</AccentWord>.
               </h2>
               <p className="mt-6 max-w-md text-paper/70">
-                Leistung wählen, Datum und Zeit aussuchen — die Bestätigung
-                kommt direkt per WhatsApp.
+                Datum und Zeit aussuchen — die Bestätigung kommt direkt per
+                WhatsApp.
               </p>
             </Reveal>
             <Reveal delay={0.1}>
