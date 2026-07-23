@@ -2,8 +2,6 @@
 
 import { useSyncExternalStore } from "react";
 
-const MEDIA_QUERY = "(min-width: 768px)";
-
 // WebGL support does not change over the lifetime of a page, so the probe
 // (which creates a real, GPU-backed canvas context) is computed at most once
 // and cached at module scope. `getSnapshot` below is invoked by
@@ -27,25 +25,9 @@ function detectWebGL(): boolean {
   return cachedHasWebGL;
 }
 
-// Share a single MediaQueryList between the subscription and the snapshot
-// read instead of creating a new one on every call.
-let mediaQueryList: MediaQueryList | null = null;
-
-function getMediaQueryList(): MediaQueryList {
-  if (!mediaQueryList) {
-    mediaQueryList = window.matchMedia(MEDIA_QUERY);
-  }
-  return mediaQueryList;
-}
-
-function subscribe(onStoreChange: () => void) {
-  const mql = getMediaQueryList();
-  mql.addEventListener("change", onStoreChange);
-  return () => mql.removeEventListener("change", onStoreChange);
-}
-
-function getSnapshot(): boolean {
-  return getMediaQueryList().matches && detectWebGL();
+function subscribe() {
+  // WebGL support never changes after page load; nothing to subscribe to.
+  return () => {};
 }
 
 function getServerSnapshot(): boolean {
@@ -53,5 +35,5 @@ function getServerSnapshot(): boolean {
 }
 
 export function useCanRender3D() {
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return useSyncExternalStore(subscribe, detectWebGL, getServerSnapshot);
 }
