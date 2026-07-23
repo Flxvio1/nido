@@ -3,14 +3,6 @@ export function Atmosphere() {
     <>
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-40"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, transparent 55%, rgba(12,11,9,0.7) 100%)",
-        }}
-      />
-      <div
-        aria-hidden
         className="pointer-events-none fixed inset-0 z-50 opacity-[0.035] mix-blend-overlay"
         style={{
           backgroundImage:

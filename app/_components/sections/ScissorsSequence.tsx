@@ -17,21 +17,21 @@ import { AccentWord } from "../ui/AccentWord";
 
 const STATEMENTS = [
   {
-    eyebrow: "01 · Haltung",
-    before: "Ein Schnitt ist ein ",
+    eyebrow: "01 · Style",
+    before: "Ein Cut ist ein ",
     accent: "Statement",
     after: ".",
   },
   {
-    eyebrow: "02 · Handwerk",
-    before: "Handwerk. Keine ",
-    accent: "Trends",
+    eyebrow: "02 · Präzision",
+    before: "Saubere Linien, klare ",
+    accent: "Konturen",
     after: ".",
   },
   {
     eyebrow: "03 · Versprechen",
-    before: "Dein Stil. Unsere ",
-    accent: "Klinge",
+    before: "Ein Look, der ",
+    accent: "bleibt",
     after: ".",
   },
 ];
@@ -136,7 +136,7 @@ export function ScissorsSequence() {
           ) : (
             <Image
               src={unsplashUrl(SIGNATURE_FALLBACK_IMAGE_ID)}
-              alt="Klinge und Präzision bei Nido Coiffeur"
+              alt="Schere vor dunklem Hintergrund bei Nido Coiffeur"
               fill
               sizes="100vw"
               className="object-cover opacity-40"

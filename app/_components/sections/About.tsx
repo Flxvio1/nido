@@ -23,18 +23,18 @@ const PRINCIPLES = [
   },
   {
     nr: "02",
-    title: "Klassisches Handwerk",
-    text: "Messer-Rasur, warme Tücher und Techniken, die Bestand haben.",
+    title: "Rasur & Grooming",
+    text: "Messer-Rasur mit heissem Tuch und Pflege für Haut und Bart.",
   },
   {
     nr: "03",
-    title: "Moderne Präzision",
-    text: "Skin Fades und klare Konturen, sauber bis in den Nacken.",
+    title: "Fades & Konturen",
+    text: "Skin Fades und klare Linien, sauber bis in den Nacken.",
   },
 ];
 
 const STATS = [
-  { value: 12, decimals: 0, suffix: "+", label: "Jahre Handwerk" },
+  { value: 12, decimals: 0, suffix: "+", label: "Jahre Erfahrung" },
   { value: 4.9, decimals: 1, suffix: "★", label: "Google Bewertung" },
   { value: 98, decimals: 0, suffix: "%", label: "Stammkunden" },
 ];
@@ -93,7 +93,7 @@ function RotatingBadge() {
           style={{ textTransform: "uppercase" }}
         >
           <textPath href="#badge-circle">
-            Nido Coiffeur · Reinach · Handwerk ·
+            Nido Coiffeur · Reinach · Barbershop ·
           </textPath>
         </text>
       </motion.svg>
@@ -172,7 +172,7 @@ export function About() {
             </Reveal>
             <Reveal delay={0.1}>
               <h2 className="mt-6 font-display text-4xl font-light leading-[1.05] text-paper sm:text-5xl lg:text-6xl">
-                Handwerk, das sich <AccentWord>Zeit</AccentWord> nimmt.
+                Ein Coiffeur, der sich <AccentWord>Zeit</AccentWord> nimmt.
               </h2>
             </Reveal>
             <Reveal delay={0.2}>

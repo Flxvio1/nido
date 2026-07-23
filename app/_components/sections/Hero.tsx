@@ -16,11 +16,13 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 type Word = { word: string; index: number; accent?: boolean };
 
 const HEADLINE_LINES: Word[][] = [
-  [{ word: "Präzision,", index: 0 }],
   [
-    { word: "die", index: 1 },
-    { word: "man", index: 2 },
-    { word: "spürt.", index: 3, accent: true },
+    { word: "Dein", index: 0 },
+    { word: "Style,", index: 1 },
+  ],
+  [
+    { word: "unser", index: 2 },
+    { word: "Cut.", index: 3, accent: true },
   ],
 ];
 
@@ -137,7 +139,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 1, ease: EASE, delay: 1.15 }}
         >
-          Klassisches Handwerk, ruhige Atmosphäre und ein Schnitt, der sitzt —
+          Frische Cuts, präzise Fades und Bärte in Form —
           Nido Coiffeur ist der Herren-Barbershop in Reinach.
         </motion.p>
         <motion.div
@@ -146,7 +148,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: EASE, delay: 1.35 }}
         >
-          <PillButton href="#kontakt">Termin anfragen</PillButton>
+          <PillButton href="#kontakt">Termin buchen</PillButton>
           <a
             href="#leistungen"
             className="group font-display text-sm uppercase tracking-[0.2em] text-paper/60 transition-colors hover:text-paper"

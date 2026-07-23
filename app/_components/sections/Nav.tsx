@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NAV_LINKS, CONTACT } from "@/lib/content";
+import { NAV_LINKS } from "@/lib/content";
 import { PillButton } from "../ui/PillButton";
 
 export function Nav() {
@@ -20,8 +20,8 @@ export function Nav() {
             </Link>
           ))}
         </nav>
-        <PillButton href={CONTACT.phoneHref} variant="outline">
-          Termin anfragen
+        <PillButton href="#kontakt" variant="outline">
+          Termin buchen
         </PillButton>
       </div>
     </header>

@@ -16,8 +16,7 @@ export const CONTACT = {
 export const NAV_LINKS = [
   { href: "#ueber-uns", label: "Über uns" },
   { href: "#leistungen", label: "Leistungen" },
-  { href: "#team", label: "Team" },
-  { href: "#galerie", label: "Galerie" },
+  { href: "#atmosphaere", label: "Atmosphäre" },
   { href: "#kontakt", label: "Kontakt" },
 ];
 
@@ -58,7 +57,7 @@ export const SERVICE_GROUPS = [
       {
         name: "Klassische Rasur",
         description:
-          "Rasiermesser mit heissem Handtuch, traditionelles Ritual.",
+          "Rasiermesser mit heissem Handtuch — gründlich und entspannt.",
         price: "ab CHF 50",
       },
     ],
@@ -75,33 +74,27 @@ export const SERVICE_GROUPS = [
   },
 ];
 
-export const TEAM = [
-  {
-    name: "Luca Meier",
-    role: "Inhaber & Master Barbier",
-    imageId: "1583864697784-a0efc8379f70",
+export const ATMOSPHERE = {
+  images: {
+    chairs: {
+      id: "/nido-shop-interior-01.png",
+      alt: "Barber-Stühle in gedämpftem Licht bei Nido Coiffeur",
+      caption: "Der Raum",
+    },
+    interior: {
+      id: "/nido-shop-team-02.png",
+      alt: "Backstein, Spiegel und warmes Licht im Barbershop",
+      caption: "Das Team",
+    },
+    tools: {
+      id: "/nido-haircut-03.png",
+      alt: "Schere, Kamm und Klinge auf einem Tuch",
+      caption: "Der Schnitt",
+    },
   },
-  {
-    name: "Dino Rossi",
-    role: "Senior Barbier, Bart-Spezialist",
-    imageId: "1499996860823-5214fcc65f8f",
-  },
-  {
-    name: "Elias Frei",
-    role: "Barbier, Fade-Spezialist",
-    imageId: "1506634572416-48cdfe530110",
-  },
-];
+  keywords: ["Espresso inklusive", "Ohne Zeitdruck", "Mit Termin"],
+};
 
-export const GALLERY_IMAGE_IDS = [
-  "1599351431202-1e0f0137899a",
-  "1622286342621-4bd786c2447c",
-  "1517832606299-7ae9b720a186",
-  "1567894340315-735d7c361db0",
-  "1512690459411-b9245aed614b",
-];
-
-export const HERO_IMAGE_ID = "1621645582931-d1d3e6564943";
 export const ABOUT_IMAGE_ID = "1517832606299-7ae9b720a186";
 export const SIGNATURE_FALLBACK_IMAGE_ID = "1549271568-e87e07c5406b";
 
@@ -115,7 +108,7 @@ export const TESTIMONIALS = [
     author: "A. Keller",
   },
   {
-    quote: "Die heisse Rasur mit dem Messer ist ein Ritual für sich.",
+    quote: "Die heisse Rasur mit dem Messer ist jedes Mal ein Erlebnis.",
     author: "D. Baumann",
   },
   {
@@ -136,5 +129,6 @@ export function unsplashUrl(
   id: string,
   params = "w=1200&q=80&auto=format&fit=crop"
 ) {
+  if (id.startsWith("/")) return id;
   return `https://images.unsplash.com/photo-${id}?${params}`;
 }

@@ -9,8 +9,8 @@ export function Footer() {
           <div>
             <p className="font-accent text-2xl italic text-paper">Nido</p>
             <p className="mt-4 max-w-[220px] text-sm leading-relaxed text-paper/50">
-              Herren-Barbershop in Reinach — klassisches Handwerk, moderne
-              Präzision.
+              Herren-Barbershop in Reinach — Cuts, Fades und klassische
+              Rasuren.
             </p>
           </div>
           <div>

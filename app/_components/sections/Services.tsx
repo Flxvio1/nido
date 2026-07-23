@@ -34,7 +34,7 @@ export function Services() {
                 </p>
               </div>
               <h2 className="mt-6 font-display text-4xl font-light leading-[1.05] text-paper sm:text-5xl lg:text-6xl">
-                Jeder Schnitt ein <AccentWord>Ritual</AccentWord>.
+                Vom Cut bis zur <AccentWord>Rasur</AccentWord>.
               </h2>
             </div>
             <p className="font-display text-[11px] uppercase tracking-[0.25em] text-paper/50">
